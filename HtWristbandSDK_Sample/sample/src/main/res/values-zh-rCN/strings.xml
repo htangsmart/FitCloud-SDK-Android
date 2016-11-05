@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HtWristbandSample</string>
+
+    <string name="no_device_found">未发现设备</string>
+    <string name="scan">扫描</string>
+    <string name="stop_scan">停止扫描</string>
+</resources>

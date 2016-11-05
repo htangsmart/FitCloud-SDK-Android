@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">HtWristbandSample</string>
+
+    <string name="sure">Sure</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="prompt">Hint</string>
+
+    <!--Scan-->
+    <string name="no_device_found">No devices found</string>
+    <string name="scan">Scan</string>
+    <string name="stop_scan">Stop Scanning</string>
+
+    <!--Connect-->
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting...</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connect_failed">ConnectFailed</string>
+
+
+    <!--Alarm Clock-->
+    <string name="alarm_clock">Alarm Clock</string>
+    <string name="alarm_clock_edit">Alarm Clock Edit</string>
+    <string name="alarm_clock_repeat">Alarm Clock Repeat</string>
+    <string name="add_clock">Add alarm clock</string>
+
+    <string name="repeat_00">Monday</string>
+    <string name="repeat_01">Tuesday</string>
+    <string name="repeat_02">Wednesday</string>
+    <string name="repeat_03">Thursday</string>
+    <string name="repeat_04">Friday</string>
+    <string name="repeat_05">Saturday</string>
+    <string name="repeat_06">Sunday</string>
+
+    <string name="repeat_00_simple">Mon</string>
+    <string name="repeat_01_simple">Tue</string>
+    <string name="repeat_02_simple">Wed</string>
+    <string name="repeat_03_simple">Thu</string>
+    <string name="repeat_04_simple">Fri</string>
+    <string name="repeat_05_simple">Sat</string>
+    <string name="repeat_06_simple">Sun</string>
+
+    <string name="every_day">Everyday</string>
+    <string name="never">Never</string>
+    <string name="working_days">Working days</string>
+
+    <string name="clock_limit_8">Can only add 8 alarm clocks</string>
+    <string name="clock_repeat">Alarm cycle</string>
+    <string name="delete_clock">Delete alarm clock</string>
+    <string name="delete_clock_tip_message">Are you sure to delete the alarm clock?</string>
+
+</resources>
