@@ -49,4 +49,6 @@
     <string name="delete_clock">Delete alarm clock</string>
     <string name="delete_clock_tip_message">Are you sure to delete the alarm clock?</string>
 
+    <string name="select_dfu_file">Select DFU File</string>
+    <string name="cancel_dfu">Cancel DFU</string>
 </resources>

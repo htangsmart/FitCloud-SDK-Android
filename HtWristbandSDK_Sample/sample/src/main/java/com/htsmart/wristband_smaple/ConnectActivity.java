@@ -1,7 +1,10 @@
 package com.htsmart.wristband_smaple;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +24,7 @@ import com.htsmart.wristband_smaple.alarmclock.AlarmClocksActivity;
 import com.htsmart.wristband_smaple.bean.User;
 import com.htsmart.wristband_smaple.cameracontrol.CameraControlActivity;
 import com.htsmart.wristband_smaple.config.ConfigActivity;
+import com.htsmart.wristband_smaple.dfu.DfuActivity;
 import com.htsmart.wristband_smaple.notification.NotificationConfigActivity;
 import com.htsmart.wristband_smaple.realtimedata.RealTimeDataActivity;
 import com.htsmart.wristband_smaple.syncdata.SyncDataActivity;
@@ -32,6 +36,8 @@ import com.htsmart.wristband_smaple.syncdata.SyncDataActivity;
 public class ConnectActivity extends AppCompatActivity {
     private static final String TAG = "ConnectActivity";
     public static final String EXTRA_DEVICE = "device";
+
+    public static final String ACTION_CONNECT_DEVICE = BuildConfig.APPLICATION_ID + ".action.connect_device";
 
     private BluetoothDevice mBluetoothDevice;
     private IDeviceConnector mDeviceConnector = WristbandApplication.getDeviceConnector();
@@ -68,7 +74,18 @@ public class ConnectActivity extends AppCompatActivity {
         });
 
         connect();
+
+        registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION_CONNECT_DEVICE));
     }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_CONNECT_DEVICE.equals(intent.getAction())) {
+                connect();
+            }
+        }
+    };
 
     private boolean isUserBound() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -150,6 +167,7 @@ public class ConnectActivity extends AppCompatActivity {
         mDeviceConnector.removeConnectorListener(mConnectorListener);
         mDevicePerformer.removePerformerListener(mPerformerListener);
         mDeviceConnector.close();
+        unregisterReceiver(mBroadcastReceiver);
     }
 
     /**
@@ -240,11 +258,10 @@ public class ConnectActivity extends AppCompatActivity {
         startActivity(new Intent(this, ConfigActivity.class));
     }
 
-
     /**
      * 13 DFU
      */
     public void dfu(View view) {
-
+        startActivity(new Intent(this, DfuActivity.class));
     }
 }

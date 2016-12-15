@@ -115,8 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="dfu"
-                android:text="13.DFU"
-                android:visibility="gone"/>
+                android:text="13.DFU"/>
 
         </LinearLayout>
     </ScrollView>

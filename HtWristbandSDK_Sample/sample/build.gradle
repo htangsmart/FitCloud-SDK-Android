@@ -32,4 +32,5 @@ dependencies {
     compile(name: 'Lib_WheelView-release', ext: 'aar')
     compile(name: 'wristband-release', ext: 'aar')
     compile(name: 'Lib_BluetoothLe-release', ext: 'aar')
+    compile(name: 'Lib_DFU-release', ext: 'aar')
 }

@@ -1,8 +1,13 @@
 package com.htsmart.wristband_smaple;
 
+import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -49,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
 
         //Add ScannerListener in onCreate. And you should Remove ScannerListener int onDestroy.
         mDeviceScanner.addScannerListener(mScannerListener);
+
+        //Android 6.0 BLE scan operation need extra permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ACCESS_COARSE_LOCATION_PERMISSION);
+        }
+    }
+
+    private static final int REQUEST_CODE_ACCESS_COARSE_LOCATION_PERMISSION = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //do nothing
     }
 
     /**

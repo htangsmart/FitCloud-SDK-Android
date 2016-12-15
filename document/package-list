@@ -2,5 +2,6 @@ com.htsmart.wristband
 com.htsmart.wristband.bean
 com.htsmart.wristband.bean.config
 com.htsmart.wristband.connector
+com.htsmart.wristband.dfu
 com.htsmart.wristband.performer
 com.htsmart.wristband.scanner
