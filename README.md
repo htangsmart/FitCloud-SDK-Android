@@ -451,13 +451,14 @@ PageConfig用于配置手表上的显示的界面，一共提供了11种配置�
 
 
 ###13.DFU升级
-使用DfuManager可以对手表硬件进行OTA升级。
-DFUManager所完成的工作如下：
-1. 请求进入OTA模式
-2. 搜索OTA设备
-3. 发送OTA数据包
-4. 已发送的OTA数据包百分比变化
-5. 升级成功
+使用DfuManager可以对手表硬件进行OTA升级。DFUManager所完成的工作如下：
+
+ 1. 请求进入OTA模式
+ 2. 搜索OTA设备
+ 3. 发送OTA数据包
+ 4. 已发送的OTA数据包百分比变化
+ 5. 升级成功
+
 具体细节，请参考javaDoc文档和示例。
 
 

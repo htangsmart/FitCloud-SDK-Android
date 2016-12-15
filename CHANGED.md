@@ -1,3 +1,11 @@
+#V1.0.1(2016-12-15)
+##SDK:
+1. 添加DFU功能的支持
+
+##Sample:
+1. 完善DFU的示例
+
+
 #V1.0.0(2016-10-26)
 ##SDK:
 1. IDeviceConnector 添加设置重试策略的方法 : setTryTimeStrategy(TryTimeStrategy)
@@ -14,13 +22,4 @@
 3. 完善实时数据示例
 4. 完善拍照控制示例
 5. 完善手环配置的示例
-
-
-#V1.0.1(2016-12-15)
-##SDK:
-1. 添加DFU功能的支持
-
-##Sample:
-1. 完善DFU的示例
-
 
