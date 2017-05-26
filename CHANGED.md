@@ -1,13 +1,13 @@
-#V1.0.1(2016-12-15)
-##SDK:
+# V1.0.1(2016-12-15)
+## SDK:
 1. 添加DFU功能的支持
 
-##Sample:
+## Sample:
 1. 完善DFU的示例
 
 
-#V1.0.0(2016-10-26)
-##SDK:
+# V1.0.0(2016-10-26)
+## SDK:
 1. IDeviceConnector 添加设置重试策略的方法 : setTryTimeStrategy(TryTimeStrategy)
 2. IDeviceConnector 中 connect** 方法不在持有 IWristbandUser 的引用，而是拷贝它的值。
 3. WristbandAlarm 实现了 Cloneable 和 Parcelable 接口。并添加了 ALARM_ID_MIN 和 ALARM_ID_MAX 两个静态域
@@ -16,7 +16,7 @@
 6. ShowConfig 重命名为 PageConfig, 一些对应的方法名字和静态域名字也相应改变了。
 7. WristbandVersion 中 pageShow 字段重命名为 pageSupport,并添加了相应的判断方法 isPageSupport(@PageConfig.Flag int flag)。
 
-##Sample:
+## Sample:
 1. 完善闹钟列表示例
 2. 完善消息通知示例
 3. 完善实时数据示例
