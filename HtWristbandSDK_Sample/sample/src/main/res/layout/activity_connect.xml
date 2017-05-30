@@ -32,6 +32,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -41,81 +42,81 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="alarmClocks"
-                android:text="1.Alarm Clock"/>
+                android:text="@string/op1"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="notification"
-                android:text="2.Notification"/>
+                android:text="@string/op2"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="set_user_info"
-                android:text="3.Set user info"/>
+                android:text="@string/op3"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="set_wear_way"
-                android:text="4.Set wear way"/>
+                android:text="@string/op4"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="request_battery"
-                android:text="5.Request battery"/>
+                android:text="@string/op5"/>
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="find_wristband"
-                android:text="6.Find wristband"/>
+                android:text="@string/op6"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="set_weather"
-                android:text="7.Set weather"/>
+                android:text="@string/op7"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="real_time_data"
-                android:text="8.Real time data"/>
+                android:text="@string/op8"/>
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="camera_control"
-                android:text="9.Camera control"/>
+                android:text="@string/op9"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="sync_data"
-                android:text="10.Sync data"/>
+                android:text="@string/op10"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="unbind_user"
-                android:text="11.Unbind user"/>
+                android:text="@string/op11"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="wristband_config"
-                android:text="12.Wristband config"/>
+                android:text="@string/op12"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="dfu"
-                android:text="13.DFU"/>
+                android:text="@string/op13"/>
 
         </LinearLayout>
     </ScrollView>

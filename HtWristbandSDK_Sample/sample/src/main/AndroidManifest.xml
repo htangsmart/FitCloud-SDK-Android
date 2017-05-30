@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.htsmart.wristband_smaple">
+          package="com.htsmart.wristband.sample">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:name=".MyApplication"
@@ -21,36 +23,36 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ConnectActivity" />
-        <activity android:name=".alarmclock.AlarmClocksActivity" />
-        <activity android:name=".alarmclock.AlarmClockEditActivity" />
-        <activity android:name=".alarmclock.AlarmClockRepeatActivity" />
-        <activity android:name=".notification.NotificationConfigActivity" />
-        <activity android:name=".realtimedata.RealTimeDataActivity" />
-        <activity android:name=".cameracontrol.CameraControlActivity" />
-        <activity android:name=".syncdata.SyncDataActivity" />
-        <activity android:name=".config.ConfigActivity" />
-        <activity android:name=".dfu.DfuActivity" />
+        <activity android:name=".ConnectActivity"/>
+        <activity android:name=".alarmclock.AlarmClocksActivity"/>
+        <activity android:name=".alarmclock.AlarmClockEditActivity"/>
+        <activity android:name=".alarmclock.AlarmClockRepeatActivity"/>
+        <activity android:name=".notification.NotificationConfigActivity"/>
+        <activity android:name=".realtimedata.RealTimeDataActivity"/>
+        <activity android:name=".cameracontrol.CameraControlActivity"/>
+        <activity android:name=".syncdata.SyncDataActivity"/>
+        <activity android:name=".config.ConfigActivity"/>
+        <activity android:name=".dfu.DfuActivity"/>
 
         <service
             android:name=".notification.CaptureNotificationService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
+                <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
 
         <receiver android:name=".notification.SmsPhoneReceiver">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="android.intent.action.PHONE_STATE" />
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
             </intent-filter>
         </receiver>
 

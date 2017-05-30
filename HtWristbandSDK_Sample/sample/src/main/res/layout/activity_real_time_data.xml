@@ -16,14 +16,13 @@
         <TextView
             android:id="@+id/heart_rate_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Heart rate:0"/>
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/heart_rate_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="@string/real_time_data_start"/>
 
     </LinearLayout>
 
@@ -39,14 +38,13 @@
         <TextView
             android:id="@+id/oxygen_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Oxygen:0"/>
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/oxygen_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="@string/real_time_data_start"/>
 
     </LinearLayout>
 
@@ -62,14 +60,13 @@
         <TextView
             android:id="@+id/blood_pressure_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Blood pressure:0"/>
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/blood_pressure_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="@string/real_time_data_start"/>
 
     </LinearLayout>
 
@@ -86,14 +83,13 @@
         <TextView
             android:id="@+id/respiratory_rate_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Respiratory rate:0"/>
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/respiratory_rate_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="@string/real_time_data_start"/>
 
     </LinearLayout>
 

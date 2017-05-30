@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="The other configuration is relatively simple, please refer to the integration of documents, here only to show the use of PageConfig."/>
+        android:text="@string/config_prompt"/>
 
     <ListView
         android:id="@+id/list_view"
