@@ -1,16 +1,16 @@
 
-#和唐手环Android集成文档
+# 和唐手环Android集成文档
 
-[TOC]
 
-##一、使用范围
+
+## 一、使用范围
 
 Android版本要求：4.4以上
 手环硬件版本要求：xxx.xxx.xxx
 该文档为指导Android开发人员集成和唐手环SDK，主要为一些关键的使用示例，具体的详细API，请参考JavaDoc文档。
 
 
-##二、文档介绍
+## 二、文档介绍
 文档第三部分：基础使用。主要介绍如何集成SDK，完成扫描、连接、发送指令和响应应答。内容如下：    
 
 1. 权限设置
@@ -40,8 +40,8 @@ Android版本要求：4.4以上
 这两部分都是介绍使用SDK的方法和需要注意的事项，具体详细的API，请参考JavaDoc文档。
 
 
-##三、基础使用
-###1.权限设置
+## 三、基础使用
+### 1.权限设置
 
 ```
 <!--大部分情况下,你需要保证设备支持BLE-->
@@ -55,7 +55,7 @@ Android版本要求：4.4以上
 <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
 ```
 
-###2.初始化
+### 2.初始化
 
 使用SDK的第一步，需要完成初始工作。你可以直接让你自己的`Application`类继承`WristbandApplication`，或者在`onCreate`方法中初始化它。
 
@@ -75,7 +75,7 @@ public class YourApplication extends Application{
 }
 ```
 
-###3.配置
+### 3.配置
 
 需要配置的内容并不多，而且也不是必要的，你可以在完成初始化后，选择配置部分内容。
 
@@ -104,7 +104,7 @@ public class YourApplication extends Application{
 ```
 
 
-###4.扫描
+### 4.扫描
 
 获取 `IDeviceScanner` 对象，进行扫描蓝牙设备。
 
@@ -140,7 +140,7 @@ public class YourApplication extends Application{
 需要注意的是` mDeviceScanner` 扫描并不会区分是不是手环设备，而是针对附近所有的蓝牙设备。
 而且开始扫描`start()`和结束扫描`stop()`必须是在主线程调用，另外`mScannerListener`的回调也都是在主线程调用的。
 
-###5.连接
+### 5.连接
 
 获取`IDeviceConnector`进行连接手环。
 
@@ -215,10 +215,12 @@ IDevicePerformer#cmd_setUserInfo(boolean sex, Date birthday, int height, int wei
 
 绑定和登录两者有一些差别，对于一个新的用户，第一次连接手环时，你需要选择绑定操作。绑定成功之后，下一次连接手环时，你需要选择登录操作。如果手环当前绑定的用户ID是1000，那么当你尝试使用ID为1001的用户进行登录时，登录会失败。某个用户是否绑定过，SDK内部并没有记录，你需要自己去处理这个逻辑。
 
+如果当前绑定的用户ID为1000，尝试使用用户ID为1001重新绑定，仍然可以绑定成功。每次绑定成功，手环将清除之前的用户数据，包括运动、睡眠、心率等所有数据。
+
 当连接成功后， `ConnectorListener#onConnect(WristbandConfig config)` 方法会回调，并且将已经获取的手环配置信息 `WristbandConfig`一起返回。配置信息如何使用，请参考12、参数配置。
 
 
-###6.指令操作
+### 6.指令操作
 
 获取`IDevicePerformer`执行指令操作。
 
@@ -259,9 +261,9 @@ mIDevicePerformer.cmd_requestWristbandVersion();
 
 
 
-##四、手环功能和对应API介绍
+## 四、手环功能和对应API介绍
 
-###1.闹钟设置
+### 1.闹钟设置
 
 手环只支持8个闹钟，每一个闹钟以`WristbandAlarm`中的`alarmId`作为唯一标志，所以`alarmId`的值为0-7。
 闹钟的时间信息为 年(year)，月(month)，日(day)，时(hour)，分(minute)。
@@ -274,7 +276,7 @@ mIDevicePerformer.cmd_requestWristbandVersion();
 
 
 
-###2.消息通知
+### 2.消息通知
 
 使用`IDevicePerformer# sendWristbandNotification(WristbandNotification notification) `可以对手环发送消息通知，该方法没有响应应答，你不需要关系消息通知是否发送成功。
 
@@ -305,28 +307,28 @@ private static final int FLAG_DEVICE_WARING = 15;
 因为Android本身并不支持ANCS，所以这些通知消息需要自己捕获，具体请参考Sample工程。
 
 
-###3.设置用户信息
+### 3.设置用户信息
 当绑定或登录手环的时候，已经将用户信息缓存到内部，如果用户信息有更新，那么可以调用`IDevicePerformer#cmd_cmd_setUserInfo(boolean sex, Date birthday, int height, int weight)`来更新用户信息。
 请注意这里的生日值不能为Null，否则会崩溃。
 
 
-###4.设置佩戴方式
+### 4.设置佩戴方式
 
 当绑定或登录手环的时候，已经将佩戴方式缓存到内部，如果佩戴方式有更新，那么可以调用`IDevicePerformer#cmd_setWearWay(boolean leftHand)`来更新佩戴方式。
 
 
-###5.请求电量
+### 5.请求电量
 
 调用`IDevicePerformer#cmd_requestBattery()`来请求电量信息。
 
 
-###6.查找手环 和 查找手机
+### 6.查找手环 和 查找手机
 
 手机主动查找手环，调用`IDevicePerformer#cmd_findWristband()`。
 手环主动查找手机，`PerformerListener#onFindPhone()`会主动回调。
 
 
-###7.设置天气
+### 7.设置天气
 
 调用`IDevicePerformer#cmd_setWeather(int temperature, int weatherCode, String city)`来设置天气。
 在使用设置天气之前，需要保证`WristbandVersion#isWeatherEnable()`为true，即手环支持天气功能。
@@ -350,7 +352,7 @@ private static final int FLAG_DEVICE_WARING = 15;
 ```
 
 
-###8.实时数据
+### 8.实时数据
 
 SDK支持4种实时数据的测试，但是能不能使用，还要取决于手环是否有该项功能模块。使用`WristbandVersion`检测手环中该功能模块是否存在。具体如何检测请参考12、手环配置。
 
@@ -362,7 +364,7 @@ SDK支持4种实时数据的测试，但是能不能使用，还要取决于手�
 如果2分钟之内，没有主动调用关闭的方法，那么会自动关闭，并回调`PerformerListener#onCloseHealthyRealTimeData(int)`。
 
 
-###9.拍照控制
+### 9.拍照控制
 
 手环实现的拍照功能并不能控制Android系统的相机，你必须自己实现相机拍照功能。
 在进入相机界面，调用`mDevicePerformer.cmd_setCameraStatus(true)`通知手环已经准备好拍照控制。此时晃动手环，手环就会主动调用拍照，然后你需要在`PerformerListener#onCameraTakePhoto()`里调用拍照。
@@ -370,7 +372,7 @@ SDK支持4种实时数据的测试，但是能不能使用，还要取决于手�
 在退出相机的时候，务必调用`mDevicePerformer.cmd_setCameraStatus(false)`通知手环已经退出拍照控制。
 
 
-###10.数据同步
+### 10.数据同步
 
 SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在的，其他功能模块能不能使用，还要取决于手环是否有该项功能模块。使用`WristbandVersion`检测手环中该功能模块是否存在。具体如何检测请参考`12、手环配置`。
 
@@ -378,12 +380,12 @@ SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在�
 当同步完成或者失败，`PerformerListener#onSyncDataEnd(boolean success)`会被回调。可以根据此回调的参数来判断此次同步数据是否成功。
 
 
-###11.解绑用户
+### 11.解绑用户
 
 使用`IDevicePerformer#userUnBind()`解绑用户，解绑的结果在`PerformerListener#onUserUnBind(boolean success)`中返回。
 
 
-###12.手环配置
+### 12.手环配置
 
 在SDK中，`WristbandConfig`作为手环配置信息的实体类，里面包含了多种不同的手环配置信息。使用`IDevicePerformer#cmd_requestWristbandConfig()`来获取配置信息，获取的结果在`PerformerListener# onResponseWristbandConfig(WristbandConfig config)`中回调。
 另外，可以使用`IDevicePerformer#cmd_requestWristbandVersion()`和`IDevicePerformer#cmd_requestNotificationConfig()`来请求单独的两项配置信息。当然你也可以不使用这两个方法，直接获取所有配置。
@@ -392,7 +394,7 @@ SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在�
 
 
 
-####12.1 WristbandVersion
+#### 12.1 WristbandVersion
 
 WristbanVersion里的信息主要分为三部分：
 
@@ -426,31 +428,36 @@ private int pageShow;
 ```
 
 
-####12.2 NotificationConfig
+#### 12.2 NotificationConfig
 用于配置消息通知。
 
 
-####12.3 BloodPressureConfig
+#### 12.3 BloodPressureConfig
 用于配置血压，包括两个值：收缩压和舒张压。请设置正常范围内的血压值。
 
-####12.4 DrinkWaterConfig
+#### 12.4 DrinkWaterConfig
 用于提醒用户按时喝水。
 
-####12.5 FunctionConfig
-用于配置手表的辅助功能，目前仅仅只有一个翻腕亮屏的设置。
+#### 12.5 FunctionConfig
+用于配置手表的辅助功能，目前有四个设置
+    
+1. 翻腕亮屏(FLAG_TURN_WRIST_LIGHTING)，true为开启，false为关闭
+2. 加强测量(FLAG_STRENGTHEN_TEST)，true为开启，false为关闭
+3. 十二小时制(FLAG_HOUR_STYLE_12)，true为十二小时制，false为二十四小时制
+4. 英制单位(FLAG_IMPERIAL_UNITS)，true为英制单位，false为公制单位
 
-####12.6 HealthyConfig
+#### 12.6 HealthyConfig
 用于配置是否开启健康数据的实时检测，并设置开始和结束的时间。
 
-####12.7 SedentaryConfig
+#### 12.7 SedentaryConfig
 用于配置是否在用户久坐的时候提醒用户，并设置开始和结束时间，以及免打扰设置。
 免打扰如果开启，那么固定的免打扰时间为12:00-2:00。
 
-####12.8 PageConfig
+#### 12.8 PageConfig
 PageConfig用于配置手表上的显示的界面，一共提供了11种配置的界面。但是在设置配置之前，请先检测使用WristbandVersion#isPageSupport(int flag)检测手环是否支持该页面。具体参考Sample工程。
 
 
-###13.DFU升级
+### 13.DFU升级
 使用DfuManager可以对手表硬件进行OTA升级。DFUManager所完成的工作如下：
 
  1. 请求进入OTA模式
