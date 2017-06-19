@@ -363,6 +363,7 @@ SDK支持4种实时数据的测试，但是能不能使用，还要取决于手�
 成功开启实时数据后，实时数据检测将持续2分钟的时间，并且每隔5秒左右，会返回一次实时数据测量值，返回结果在`PerformerListener#onResultHealthyRealTimeData(int heartRate, int oxygen, int diastolicPressure, int systolicPressure, int respiratoryRate)`回调。
 如果2分钟之内，没有主动调用关闭的方法，那么会自动关闭，并回调`PerformerListener#onCloseHealthyRealTimeData(int)`。
 
+ADD:新增ECG(心电)实时数据，使用类似于其他四种实时数据，但是数据的返回在一个单独的方法`PerformerListener#onResultEcgRealTimeData(byte[])`中。返回的数据为原始数据，每包数据为20个字节。2个字节代表心电，2个字节代表心率，一直交替直到20字节。
 
 ### 9.拍照控制
 
@@ -458,13 +459,13 @@ PageConfig用于配置手表上的显示的界面，一共提供了11种配置�
 
 
 ### 13.DFU升级
-使用DfuManager可以对手表硬件进行OTA升级。DFUManager所完成的工作如下：
+使用DfuManager可以对手表硬件进行OTA升级。DfuManager所完成的工作如下：
 
- 1. 请求进入OTA模式
- 2. 搜索OTA设备
- 3. 发送OTA数据包
- 4. 已发送的OTA数据包百分比变化
- 5. 升级成功
+ 1. 检查DFU文件是否正确。如果传入文件url，会自动下载，请确保app拥有网络权限
+ 2. 进入DFU模式。
+ 3. 搜索DFU设备。
+ 4. 发送升级数据包。
+ 5. 升级成功。
 
 具体细节，请参考javaDoc文档和示例。
 
