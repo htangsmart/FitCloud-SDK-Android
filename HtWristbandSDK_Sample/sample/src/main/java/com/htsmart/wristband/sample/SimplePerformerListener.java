@@ -76,6 +76,26 @@ public class SimplePerformerListener implements PerformerListener {
     }
 
     @Override
+    public void onResultEcgRealTimeData(byte[] data) {
+
+    }
+
+    @Override
+    public void onOpenGSensor(boolean success) {
+
+    }
+
+    @Override
+    public void onCloseGSensor() {
+
+    }
+
+    @Override
+    public void onResultGSensor(byte[] data) {
+
+    }
+
+    @Override
     public void onCameraTakePhoto() {
 
     }

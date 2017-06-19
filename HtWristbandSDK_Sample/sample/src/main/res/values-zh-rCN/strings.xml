@@ -49,9 +49,6 @@
     <string name="delete_clock">删除闹钟</string>
     <string name="delete_clock_tip_message">确定删除这个闹钟吗？</string>
 
-    <string name="select_dfu_file">选择DFU文件</string>
-    <string name="cancel_dfu">取消DFU</string>
-
     <string name="clear_bond_state">清除绑定</string>
     <string name="dialog_clear_bond_title">清除用户绑定状态</string>
     <string name="dialog_clear_bond_msg">
@@ -118,5 +115,12 @@
     <string name="sync_data_success">同步数据成功</string>
     <string name="sync_data_failed">同步数据失败</string>
     <string name="sync_data_count">同步数据条数:<xliff:g id="params">%1$d</xliff:g></string>
+
+    <!--ECG-->
+    <string name="open_ecg">开启心电</string>
+    <string name="close_ecg">关闭心电</string>
+    <string name="device_not_connect">设备未连接</string>
+    <string name="startup_failed">启动失败</string>
+    <string name="startup_ing">启动中&#8230;</string>
 
 </resources>

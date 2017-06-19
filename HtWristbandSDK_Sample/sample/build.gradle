@@ -38,7 +38,7 @@ dependencies {
     //    compile(name: 'wristband-release', ext: 'aar')
     //    compile(name: 'Lib_BluetoothLe-release', ext: 'aar')
     // AndPermission
-    compile 'com.yanzhenjie:permission:1.0.7'
+    compile 'com.yanzhenjie:permission:1.0.8'
 
     // greenDao
     compile 'org.greenrobot:greendao:3.2.2'

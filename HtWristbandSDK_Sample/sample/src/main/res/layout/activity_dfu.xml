@@ -5,31 +5,15 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/select_file_btn"
+        android:id="@+id/check_remote_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/select_dfu_file" />
+        android:text="@string/check_remote_update" />
 
     <Button
-        android:id="@+id/cancel_btn"
+        android:id="@+id/select_local_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_dfu"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/dfu_state_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-
-    <ProgressBar
-        android:id="@+id/ota_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone" />
-
+        android:text="@string/select_local_update" />
 
 </LinearLayout>

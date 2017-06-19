@@ -49,8 +49,6 @@
     <string name="delete_clock">Delete alarm clock</string>
     <string name="delete_clock_tip_message">Are you sure to delete the alarm clock?</string>
 
-    <string name="select_dfu_file">Select DFU File</string>
-    <string name="cancel_dfu">Cancel DFU</string>
 
     <string name="clear_bond_state">Clear Bond</string>
     <string name="dialog_clear_bond_title">Clear User Bond State</string>
@@ -117,5 +115,53 @@
     <string name="sync_data_success">Sync Data Success</string>
     <string name="sync_data_failed">Sync Data Failed</string>
     <string name="sync_data_count">Sync Data Count:<xliff:g id="params">%1$d</xliff:g></string>
+
+    <!--ECG-->
+    <string name="open_ecg">Open Ecg</string>
+    <string name="close_ecg">Close Ecg</string>
+    <string name="device_not_connect">Device Not Connected</string>
+    <string name="startup_failed">Startup Failed</string>
+    <string name="startup_ing">Startup&#8230;</string>
+
+
+    <string name="ble_not_support">Your device doesn\'t support Bluetooth 4.0</string>
+    <string name="bt_not_open">Bluetooth is not on</string>
+    <string name="device_disconnected">Device disconnected</string>
+
+    <!--
+    <<DFU
+    -->
+
+    <string name="check_remote_update">Check Remote DFU file</string>
+    <string name="select_local_update">Select Local DFU File</string>
+
+    <!--Dfu State-->
+    <string name="where_dfu_state_dfu_file">Prepare file &#8230;</string>
+    <string name="where_dfu_state_dfu_mode">Enter DFU &#8230;</string>
+    <string name="where_dfu_state_dfu_device">Searching &#8230;</string>
+    <string name="where_dfu_state_dfu_process">Prepare &#8230;</string>
+
+    <!--Dfu Progress-->
+    <string name="where_dfu_progress_start">Upgrading &#8230;</string>
+    <string name="where_dfu_progress_completed">Upgrade completed</string>
+
+    <!--Dfu Result-->
+    <string name="where_dfu_error_file_format">DFU file format error</string>
+    <string name="where_dfu_error_file_not_exist">DFU file doesn\'t exist</string>
+    <string name="where_dfu_error_file_download">Firmware download failed</string>
+    <string name="where_dfu_error_enter_dfu_failed">Device fails to enter DFU mode</string>
+    <string name="where_dfu_error_low_battery">Low battery.Device fails to enter DFU mode</string>
+    <string name="where_dfu_error_service_not_ready">DFU is not ready</string>
+    <string name="where_dfu_error_scan_failed">Failed to start search</string>
+    <string name="where_dfu_error_device_not_found">Device not found</string>
+    <string name="where_dfu_success">DFU succeed</string>
+    <string name="where_dfu_failed">DFU failed</string>
+
+
+    <string name="percentage"><xliff:g id="params">%1$s</xliff:g>%%
+    </string>
+    <!--
+    DFU>>
+    -->
 
 </resources>

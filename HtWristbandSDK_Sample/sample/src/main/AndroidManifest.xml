@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".MyApplication"
@@ -39,6 +40,7 @@
         <activity android:name=".syncdata.SyncDataActivity"/>
         <activity android:name=".config.ConfigActivity"/>
         <activity android:name=".dfu.DfuActivity"/>
+        <activity android:name=".realtimedata.EcgActivity"/>
 
         <service
             android:name=".notification.CaptureNotificationService"
