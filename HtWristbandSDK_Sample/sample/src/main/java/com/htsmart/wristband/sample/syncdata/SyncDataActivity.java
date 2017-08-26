@@ -13,6 +13,7 @@ import com.htsmart.wristband.WristbandApplication;
 import com.htsmart.wristband.bean.SyncRawData;
 import com.htsmart.wristband.bean.TodayTotalData;
 import com.htsmart.wristband.performer.IDevicePerformer;
+import com.htsmart.wristband.performer.PerformerListener;
 import com.htsmart.wristband.sample.MyApplication;
 import com.htsmart.wristband.sample.R;
 import com.htsmart.wristband.sample.SimplePerformerListener;
@@ -62,8 +63,8 @@ public class SyncDataActivity extends AppCompatActivity {
 
     private SimplePerformerListener mPerformerListener = new SimplePerformerListener() {
         @Override
-        public void onSyncDataStart(boolean success) {
-            if (success) {
+        public void onSyncDataStart(@SyncResult int result) {
+            if (result==PerformerListener.SYNC_STARTED) {
                 showProgressMessage(R.string.sync_data_started);
             } else {
                 dismissProgressMessage(R.string.prepare_sync_failed);

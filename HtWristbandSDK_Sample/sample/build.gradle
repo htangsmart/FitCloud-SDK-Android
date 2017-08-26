@@ -43,7 +43,7 @@ dependencies {
     // greenDao
     compile 'org.greenrobot:greendao:3.2.2'
 
-    compile(name: 'wristband-release', ext: 'aar')
-    compile(name: 'Lib_BluetoothLe-release', ext: 'aar')
-    compile(name: 'Lib_DFU-release', ext: 'aar')
+    compile(name: 'wristband-release_v1.0.4', ext: 'aar')
+    compile(name: 'Lib_BluetoothLe-release_v1.0.4', ext: 'aar')
+    compile(name: 'Lib_DFU-release_v1.0.4', ext: 'aar')
 }

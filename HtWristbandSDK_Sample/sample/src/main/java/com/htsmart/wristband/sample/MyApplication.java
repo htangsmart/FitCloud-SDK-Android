@@ -60,7 +60,7 @@ public class MyApplication extends WristbandApplication {
     }
 
     public void setNotificationConfig(NotificationConfig config) {
-        mSharedPreferences.edit().putString("NotificationConfig", new String(config.getValues())).apply();
+        mSharedPreferences.edit().putString("NotificationConfig", new String(config.getBytes())).apply();
         mNotificationConfig = config;
     }
 

@@ -1,5 +1,6 @@
 package com.htsmart.wristband.sample;
 
+import com.htsmart.wristband.bean.EcgBean;
 import com.htsmart.wristband.bean.SleepTotalData;
 import com.htsmart.wristband.bean.SyncRawData;
 import com.htsmart.wristband.bean.TodayTotalData;
@@ -106,7 +107,7 @@ public class SimplePerformerListener implements PerformerListener {
     }
 
     @Override
-    public void onSyncDataStart(boolean success) {
+    public void onSyncDataStart(@SyncResult int result) {
 
     }
 
@@ -122,6 +123,11 @@ public class SimplePerformerListener implements PerformerListener {
 
     @Override
     public void onSyncDataSleepTotalData(List<SleepTotalData> datas) {
+
+    }
+
+    @Override
+    public void onSyncDataEcgResult(List<EcgBean> ecgBeanList) {
 
     }
 

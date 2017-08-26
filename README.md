@@ -375,10 +375,15 @@ ADD:新增ECG(心电)实时数据，使用类似于其他四种实时数据，�
 
 ### 10.数据同步
 
-SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在的，其他功能模块能不能使用，还要取决于手环是否有该项功能模块。使用`WristbandVersion`检测手环中该功能模块是否存在。具体如何检测请参考`12、手环配置`。
+SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在的，其他功能模块能不能使用，还要取决于手环是否有该项功能模块。
+使用`WristbandVersion`检测手环中该功能模块是否存在。具体如何检测请参考`12、手环配置`。
 
-使用`IDevicePerformer#syncData()`开始数据同步，开始的结果在`PerformerListener#onSyncDataStart(boolean success)`中返回。如果开启成功，SDK内部会根据手环的配置，依次去同步手环所支持功能模块的数据。顺序为步数->睡眠->紫外线(如果可用)->血氧(如果可用)->血压(如果可用)->呼吸频率(如果可用)->心率(如果可用)。如果某一个模块存在数据，那么就会回调一次`PerformerListener#onSyncDataResult(List<SyncRawData> datas)`方法。当所有功能模块同步完成后，SDK内部还会去获取当天手环的统计数据，结果在`PerformerListener#onSyncDataTodayTotalData(TodayTotalData data)`中返回。
+使用`IDevicePerformer#syncData()`开始数据同步，开始的结果在`PerformerListener#onSyncDataStart(int result)`中返回。
+如果开启成功，SDK内部会根据手环的配置，依次去同步手环所支持功能模块的数据。顺序为步数->睡眠->紫外线(如果可用)->血氧(如果可用)->血压(如果可用)->呼吸频率(如果可用)->心率(如果可用)。如果某一个模块存在数据，那么就会回调一次`PerformerListener#onSyncDataResult(List<SyncRawData> datas)`方法。
+当所有功能模块同步完成后，SDK还会去获取心电数据(如果心电可用的话)，结果会在`PerformerListener#onSyncDataEcgResult(List<EcgBean>)`中返回。
+最后，SDK内部还会去获取当天手环的统计数据和睡眠7天历史数据，结果在`PerformerListener#onSyncDataTodayTotalData(TodayTotalData data)`和`PerformerListener#onSyncDataSleepTotalData(List<SleepTotalData>)`中返回。
 当同步完成或者失败，`PerformerListener#onSyncDataEnd(boolean success)`会被回调。可以根据此回调的参数来判断此次同步数据是否成功。
+要注意失败的是，即使同步失败，中间的同步数据流程依然可能返回数据，请记得处理这些数据。
 
 
 ### 11.解绑用户
@@ -388,16 +393,33 @@ SDK支持6个功能模块的数据同步，其中步数和睡眠是必定存在�
 
 ### 12.手环配置
 
-在SDK中，`WristbandConfig`作为手环配置信息的实体类，里面包含了多种不同的手环配置信息。使用`IDevicePerformer#cmd_requestWristbandConfig()`来获取配置信息，获取的结果在`PerformerListener# onResponseWristbandConfig(WristbandConfig config)`中回调。
-另外，可以使用`IDevicePerformer#cmd_requestWristbandVersion()`和`IDevicePerformer#cmd_requestNotificationConfig()`来请求单独的两项配置信息。当然你也可以不使用这两个方法，直接获取所有配置。
+在SDK中，`WristbandConfig`作为手环配置信息的实体类，里面包含了手环所有的配置信息和功能参数。
+1. WristbandVersion 固件信息
+2. NotificationConfig 通知配置
+3. BloodPressureConfig 血压配置
+4. DrinkWaterConfig 喝水提醒配置，V1.0.4新增了开始时间，结束时间和间隔时间的设置
+5. FunctionConfig 辅助功能配置
+6. HealthyConfig 健康数据的实时检测配置
+7. SedentaryConfig 久坐提醒配置
+8. PageConfig 手环页面配置
 
-如果你想要将配置缓存到本地。对于`WristbandVersion`，你可以直接获取它的字段存储起来。对于其他的各项配置，你可以使用`getBytes()`方法，获取对应配置的字节数组然后在存储起来。
+V1.0.4新增
+9. TurnWristLightingConfig 新翻腕亮屏配置，代替旧版本 FunctionConfig 中的翻腕亮屏(FLAG_TURN_WRIST_LIGHTING)。如果固件非最新版本，那么此字段可能为NULL，请使用FunctionConfig配置此功能。
 
+    
+在连接手环成功后，`ConnectorListener#onConnect(WristbandConfig)`会返回`WristbandConfig`。
+你可以在此时通过`WristbandConfig#getBytes()`获取对应的字节码，缓存到本地。之后可以通过`WristbandConfig#newInstance(byte[])`重新生成实例。
+注意：虽然`WristbandConfig`的构造方法是公开的，但是最好不要在外部调用，避免出现不可预料的错误。
+
+另外，可以使用`IDevicePerformer#cmd_requestWristbandConfig()`来获取配置信息，获取的结果在`PerformerListener# onResponseWristbandConfig(WristbandConfig config)`中回调。
+也可以使用`IDevicePerformer#cmd_requestWristbandVersion()`和`IDevicePerformer#cmd_requestNotificationConfig()`来请求单独的两项配置信息。当然你也可以不使用这两个方法，直接获取所有配置。
+
+如果想要获取`WristbandConfig`中某一项配置的字节码，同样可以使用该项配置的`getBytes()`方法，如`PageConfig#getBytes()`.
 
 
 #### 12.1 WristbandVersion
 
-WristbanVersion里的信息主要分为三部分：
+WristbandVersion里的信息主要分为三部分：
 
 1. 硬件、固件、flash等版本信息，用于以后固件升级时的版本判断。
 
@@ -438,6 +460,7 @@ private int pageShow;
 
 #### 12.4 DrinkWaterConfig
 用于提醒用户按时喝水。
+在V1.0.4之后，新增了开始时间，结束时间和间隔时间的设置。这些设置对旧版本的手环无效。手环是否有这部分功能，可以根据`WristbandVersion#isNewTurnWristLightingEnabled()`判断
 
 #### 12.5 FunctionConfig
 用于配置手表的辅助功能，目前有四个设置
@@ -457,6 +480,9 @@ private int pageShow;
 #### 12.8 PageConfig
 PageConfig用于配置手表上的显示的界面，一共提供了11种配置的界面。但是在设置配置之前，请先检测使用WristbandVersion#isPageSupport(int flag)检测手环是否支持该页面。具体参考Sample工程。
 
+#### 12.9 TurnWristLightingConfig
+V1.0.4新增。可以根据`WristbandVersion#isNewTurnWristLightingEnabled()`判断手环是否支持此功能。
+如果支持，务必使用该Config设置翻腕亮屏功能，如果不支持，请使用`FuncConfig#FLAG_TURN_WRIST_LIGHTING`设置。
 
 ### 13.DFU升级
 使用DfuManager可以对手表硬件进行OTA升级。DfuManager所完成的工作如下：

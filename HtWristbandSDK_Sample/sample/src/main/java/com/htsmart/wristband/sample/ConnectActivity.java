@@ -33,6 +33,8 @@ import com.htsmart.wristband.sample.notification.NotificationConfigActivity;
 import com.htsmart.wristband.sample.realtimedata.RealTimeDataActivity;
 import com.htsmart.wristband.sample.syncdata.SyncDataActivity;
 
+import java.util.Arrays;
+
 /**
  * Created by Kilnn on 16-10-5.
  * Connect and Operation Activity
@@ -117,6 +119,7 @@ public class ConnectActivity extends AppCompatActivity {
             mStateTv.setText(R.string.connect);
             updateConnectBtn(false, true);
             mWristbandConfig = config;
+            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()));
             MyApplication.getInstance().setNotificationConfig(config.getNotificationConfig());
             setUserBound(true);
         }
