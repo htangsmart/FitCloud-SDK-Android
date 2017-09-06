@@ -278,7 +278,7 @@ mIDevicePerformer.cmd_requestWristbandVersion();
 
 ### 2.消息通知
 
-使用`IDevicePerformer# sendWristbandNotification(WristbandNotification notification) `可以对手环发送消息通知，该方法没有响应应答，你不需要关系消息通知是否发送成功。
+使用`IDevicePerformer# cmd_sendWristbandNotification(WristbandNotification notification) `可以对手环发送消息通知.
 
 `WristbandNotification`为发送给手环的消息实体。你可以给手环发送一共15种不同的消息通知，如QQ，微信，Facebook等。具体的参考JavaDoc文档。
 

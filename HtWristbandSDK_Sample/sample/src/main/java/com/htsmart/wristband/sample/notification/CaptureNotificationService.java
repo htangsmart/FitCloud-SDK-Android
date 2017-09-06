@@ -97,7 +97,7 @@ public class CaptureNotificationService extends NotificationListenerService {
         WristbandNotification notification = new WristbandNotification();
         notification.setType(noticeType);
         notification.setContent(content);
-        WristbandApplication.getDevicePerformer().sendWristbandNotification(notification);
+        WristbandApplication.getDevicePerformer().cmd_sendWristbandNotification(notification);
     }
 
 

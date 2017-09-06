@@ -1,0 +1,310 @@
+package com.htsmart.wristband.sample.rxjava;
+
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.htsmart.wristband.WristbandApplication;
+import com.htsmart.wristband.bean.WristbandConfig;
+import com.htsmart.wristband.connector.ConnectorListener;
+import com.htsmart.wristband.connector.IDeviceConnector;
+import com.htsmart.wristband.performer.IDevicePerformer;
+import com.htsmart.wristband.sample.BuildConfig;
+import com.htsmart.wristband.sample.MyApplication;
+import com.htsmart.wristband.sample.R;
+import com.htsmart.wristband.sample.SimplePerformerListener;
+import com.htsmart.wristband.sample.alarmclock.AlarmClocksActivity;
+import com.htsmart.wristband.sample.bean.User;
+import com.htsmart.wristband.sample.cameracontrol.CameraControlActivity;
+import com.htsmart.wristband.sample.config.ConfigActivity;
+import com.htsmart.wristband.sample.dfu.DfuActivity;
+import com.htsmart.wristband.sample.notification.NotificationConfigActivity;
+import com.htsmart.wristband.sample.realtimedata.RealTimeDataActivity;
+import com.htsmart.wristband.sample.rxjava.result.RequestBatteryResult;
+import com.htsmart.wristband.sample.syncdata.SyncDataActivity;
+
+import java.util.Arrays;
+
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+
+/**
+ * Created by Kilnn on 16-10-5.
+ * Connect and Operation Activity
+ */
+public class RxConnectActivity extends AppCompatActivity {
+    private static final String TAG = "ConnectActivity";
+    public static final String EXTRA_DEVICE = "device";
+
+    public static final String ACTION_CONNECT_DEVICE = BuildConfig.APPLICATION_ID + ".action.connect_device";
+
+    private BluetoothDevice mBluetoothDevice;
+    private IDeviceConnector mDeviceConnector = WristbandApplication.getDeviceConnector();
+    private RxDevicePerformer mRxDevicePerformer = new RxDevicePerformer(WristbandApplication.getDevicePerformer());
+
+    private TextView mStateTv;
+    private Button mConnectBtn;
+
+    private WristbandConfig mWristbandConfig;
+
+    private User mUser = MyApplication.getInstance().getUser();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_connect);
+        mBluetoothDevice = getIntent().getParcelableExtra(EXTRA_DEVICE);
+
+        mDeviceConnector.addConnectorListener(mConnectorListener);
+        mRxDevicePerformer.init();
+
+        mStateTv = (TextView) findViewById(R.id.state_tv);
+        mConnectBtn = (Button) findViewById(R.id.connect_btn);
+
+        mConnectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDeviceConnector.isConnect()) {
+                    mDeviceConnector.close();
+                } else {
+                    connect();
+                }
+            }
+        });
+
+        connect();
+
+        registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION_CONNECT_DEVICE));
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_CONNECT_DEVICE.equals(intent.getAction())) {
+                connect();
+            }
+        }
+    };
+
+    private boolean isUserBound() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getBoolean("user_bind" + mUser.getId(), false);
+    }
+
+    private void setUserBound(boolean bound) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putBoolean("user_bind" + mUser.getId(), bound).apply();
+    }
+
+    private void connect() {
+        if (isUserBound()) {
+            mDeviceConnector.connectWithLogin(mBluetoothDevice, MyApplication.getInstance().getUser());
+        } else {
+            mDeviceConnector.connectWithBind(mBluetoothDevice, MyApplication.getInstance().getUser());
+        }
+        mStateTv.setText(R.string.connecting);
+        updateConnectBtn(true, false);
+    }
+
+    private ConnectorListener mConnectorListener = new ConnectorListener() {
+        @Override
+        public void onConnect(WristbandConfig config) {
+            mStateTv.setText(R.string.connect);
+            updateConnectBtn(false, true);
+            mWristbandConfig = config;
+            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()));
+            MyApplication.getInstance().setNotificationConfig(config.getNotificationConfig());
+            setUserBound(true);
+        }
+
+        @Override
+        public void onDisconnect(final boolean b, final boolean b1) {
+            mStateTv.setText(R.string.disconnect);
+            updateConnectBtn(true, true);
+        }
+
+        @Override
+        public void onConnectFailed(final int i) {
+            mStateTv.setText(R.string.connect_failed);
+            updateConnectBtn(true, true);
+        }
+    };
+
+    private void updateConnectBtn(boolean connect, boolean enable) {
+        mConnectBtn.setText(connect ? R.string.connect : R.string.disconnect);
+        mConnectBtn.setEnabled(enable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDeviceConnector.removeConnectorListener(mConnectorListener);
+        mRxDevicePerformer.release();
+        mDeviceConnector.close();
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    /**
+     * 1.Alarm clock
+     */
+    public void alarmClocks(View view) {
+        startActivity(new Intent(this, AlarmClocksActivity.class));
+    }
+
+    /**
+     * 2.Notification
+     */
+    public void notification(View view) {
+        startActivity(new Intent(this, NotificationConfigActivity.class));
+    }
+
+    /**
+     * 3.Set User info
+     */
+    public void set_user_info(View view) {
+//        User user = MyApplication.getInstance().getUser();
+//        mDevicePerformer.cmd_setUserInfo(user.wristbandSex(), user.wristbandBirthday(), user.wristbandHeight(), user.wristbandWeight());
+    }
+
+    /**
+     * 4.Set wear way
+     */
+    public void set_wear_way(View view) {
+        mRxDevicePerformer
+                .setWearWay(true)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(@NonNull Object o) throws Exception {
+                        Log.d(TAG,"set_wear_way success");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
+    /**
+     * 5.Request battery
+     */
+    public void request_battery(View view) {
+        mRxDevicePerformer
+                .requestBattery()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RequestBatteryResult>() {
+                    @Override
+                    public void accept(@NonNull RequestBatteryResult requestBatteryResult) throws Exception {
+                        Log.d(TAG, "requestBatteryResult percentage:" + requestBatteryResult.percentage);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
+    /**
+     * 6.Find wristband
+     */
+    public void find_wristband(View view) {
+//        mDevicePerformer.cmd_findWristband();
+    }
+
+    /**
+     * 7 Set Weather
+     */
+    public void set_weather(View view) {
+//        if (mWristbandConfig != null && mWristbandConfig.getWristbandVersion().isWeatherEnable()) {
+//            mDevicePerformer.cmd_setWeather(30, 10, "深圳");
+//        }
+    }
+
+    /**
+     * 8 Real time data
+     */
+    public void real_time_data(View view) {
+        startActivity(new Intent(this, RealTimeDataActivity.class));
+    }
+
+    /**
+     * 9 Camera control
+     */
+    public void camera_control(View view) {
+        startActivity(new Intent(this, CameraControlActivity.class));
+    }
+
+    /**
+     * 10 Sync data
+     */
+    public void sync_data(View view) {
+        startActivity(new Intent(this, SyncDataActivity.class));
+    }
+
+    /**
+     * 11 Unbind user
+     */
+    public void unbind_user(View view) {
+//        mDevicePerformer.userUnBind();
+    }
+
+
+    /**
+     * 12 Wristband config
+     */
+    public void wristband_config(View view) {
+        startActivity(new Intent(this, ConfigActivity.class));
+    }
+
+    /**
+     * 13 DFU
+     */
+    public void dfu(View view) {
+        startActivity(new Intent(this, DfuActivity.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_one_text, menu);
+        menu.findItem(R.id.menu_text1).setTitle(R.string.clear_bond_state);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_text1) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.dialog_clear_bond_title)
+                    .setMessage(R.string.dialog_clear_bond_msg)
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .setPositiveButton(R.string.dialog_sure, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setUserBound(false);
+                        }
+                    }).create().show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

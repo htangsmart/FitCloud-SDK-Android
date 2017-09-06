@@ -82,7 +82,7 @@ public class SmsPhoneReceiver extends BroadcastReceiver {
         notification.setType(type);
         notification.setName(name);
         notification.setContent(body);
-        WristbandApplication.getDevicePerformer().sendWristbandNotification(notification);
+        WristbandApplication.getDevicePerformer().cmd_sendWristbandNotification(notification);
     }
 
     private static SmsMessage[] getMessagesFromIntent(Intent intent) {

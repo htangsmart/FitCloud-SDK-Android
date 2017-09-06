@@ -42,6 +42,8 @@
         <activity android:name=".dfu.DfuActivity"/>
         <activity android:name=".realtimedata.EcgActivity"/>
 
+        <activity android:name=".rxjava.RxConnectActivity"/>
+
         <service
             android:name=".notification.CaptureNotificationService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">

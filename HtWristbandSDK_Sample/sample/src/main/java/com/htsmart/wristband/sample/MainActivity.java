@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.htsmart.wristband.sample.rxjava.RxConnectActivity;
 import com.htsmart.wristband.scanner.IDeviceScanner;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -150,7 +151,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 BluetoothDevice device = mDevices.get(i).getDevice();
-                Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
+                Intent intent;
+                if (BuildConfig.RXJAVA) {
+                    intent = new Intent(MainActivity.this, RxConnectActivity.class);
+                } else {
+                    intent = new Intent(MainActivity.this, ConnectActivity.class);
+                }
                 intent.putExtra(ConnectActivity.EXTRA_DEVICE, device);
                 startActivity(intent);
             }

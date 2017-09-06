@@ -1,3 +1,8 @@
+# V1.0.5(2017-09-26)
+## SDK:
+1. 发送通知配置的方法由`sendWristbandNotification`改为`cmd_sendWristbandNotification`，并且在`PerformerListener#onCommandSend()`里有发送结果的回调。
+2. 如果集成SDK不需要DFU功能，可以不再添加 Lib_Dfu-release.aar
+
 # V1.0.4(2017-08-26)
 ## SDK:
 1. 解决实时数据血压值错误的bug
