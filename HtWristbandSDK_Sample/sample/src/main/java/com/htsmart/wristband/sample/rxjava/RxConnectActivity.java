@@ -23,11 +23,9 @@ import com.htsmart.wristband.WristbandApplication;
 import com.htsmart.wristband.bean.WristbandConfig;
 import com.htsmart.wristband.connector.ConnectorListener;
 import com.htsmart.wristband.connector.IDeviceConnector;
-import com.htsmart.wristband.performer.IDevicePerformer;
 import com.htsmart.wristband.sample.BuildConfig;
 import com.htsmart.wristband.sample.MyApplication;
 import com.htsmart.wristband.sample.R;
-import com.htsmart.wristband.sample.SimplePerformerListener;
 import com.htsmart.wristband.sample.alarmclock.AlarmClocksActivity;
 import com.htsmart.wristband.sample.bean.User;
 import com.htsmart.wristband.sample.cameracontrol.CameraControlActivity;
@@ -40,11 +38,9 @@ import com.htsmart.wristband.sample.syncdata.SyncDataActivity;
 
 import java.util.Arrays;
 
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 /**
  * Created by Kilnn on 16-10-5.
@@ -125,12 +121,13 @@ public class RxConnectActivity extends AppCompatActivity {
     }
 
     private ConnectorListener mConnectorListener = new ConnectorListener() {
+
         @Override
-        public void onConnect(WristbandConfig config) {
+        public void onConnect(WristbandConfig config, boolean isLogin) {
             mStateTv.setText(R.string.connect);
             updateConnectBtn(false, true);
             mWristbandConfig = config;
-            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()));
+            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()) + "    \nisLogin:" + isLogin);
             MyApplication.getInstance().setNotificationConfig(config.getNotificationConfig());
             setUserBound(true);
         }
@@ -194,7 +191,7 @@ public class RxConnectActivity extends AppCompatActivity {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(@NonNull Object o) throws Exception {
-                        Log.d(TAG,"set_wear_way success");
+                        Log.d(TAG, "set_wear_way success");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -281,6 +278,13 @@ public class RxConnectActivity extends AppCompatActivity {
      */
     public void dfu(View view) {
         startActivity(new Intent(this, DfuActivity.class));
+    }
+
+    /**
+     * 14 Restart Wristband
+     */
+    public void restartWristband(View view) {
+//        mDevicePerformer.restartWristband();
     }
 
     @Override

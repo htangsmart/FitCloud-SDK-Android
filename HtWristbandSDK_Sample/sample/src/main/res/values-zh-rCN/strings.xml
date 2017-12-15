@@ -76,7 +76,7 @@
     <string name="op11">11.解绑用户</string>
     <string name="op12">12.手环配置</string>
     <string name="op13">13.DFU</string>
-
+    <string name="op14">14.重启手环</string>
 
     <!--Real Time Data-->
     <string name="real_time_data_start">开始</string>
@@ -115,6 +115,14 @@
     <string name="sync_data_success">同步数据成功</string>
     <string name="sync_data_failed">同步数据失败</string>
     <string name="sync_data_count">同步数据条数:<xliff:g id="params">%1$d</xliff:g></string>
+
+    <string name="sync_sleep_data">睡眠数据</string>
+    <string name="select_date">选择日期</string>
+    <string name="last_night_sleep">昨晚睡眠</string>
+    <string name="last_night_total_sleep">昨晚睡眠总时间:<xliff:g id="params1">%1$d</xliff:g>小时<xliff:g id="params2">%2$d</xliff:g>分钟</string>
+    <string name="last_night_deep_sleep">昨晚深睡时间:<xliff:g id="params1">%1$d</xliff:g>小时<xliff:g id="params2">%2$d</xliff:g>分钟</string>
+    <string name="last_night_shallow_sleep">昨晚浅睡时间:<xliff:g id="params1">%1$d</xliff:g>小时<xliff:g id="params2">%2$d</xliff:g>分钟</string>
+    <string name="no_sleep_detail_data">无睡眠详情数据</string>
 
     <!--ECG-->
     <string name="open_ecg">开启心电</string>

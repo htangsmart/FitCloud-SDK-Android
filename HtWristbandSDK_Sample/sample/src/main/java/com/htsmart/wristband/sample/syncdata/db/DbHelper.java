@@ -6,6 +6,8 @@ import android.util.Log;
 import com.htsmart.wristband.bean.SyncRawData;
 import com.htsmart.wristband.sample.syncdata.entity.SyncRawDataEntity;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.util.List;
 
 /**
@@ -48,6 +50,77 @@ public class DbHelper {
             long rowId = mDao.insertOrReplace(entity);
             Log.d("DbHelper", "SyncRawDataEntity updated rowId:" + rowId);
         }
+    }
+
+    /**
+     * Get the actual sleep start time between low time and high time.
+     *
+     * @param userId UserId
+     * @param low    low time
+     * @param high   high time
+     * @return sleep start value
+     */
+    public SyncRawDataEntity getSleepStart(int userId, int low, int high) {
+        QueryBuilder<SyncRawDataEntity> builder = mDao.queryBuilder();
+        builder.where(
+                SyncRawDataEntityDao.Properties.UserId.eq(userId),
+                SyncRawDataEntityDao.Properties.Type.eq(SyncRawData.TYPE_SLEEP),
+                SyncRawDataEntityDao.Properties.Time.between(low, high),
+                SyncRawDataEntityDao.Properties.Value.notEq(SyncRawData.SLEEP_STATUS_SOBER)
+        ).orderAsc(SyncRawDataEntityDao.Properties.Time).limit(1);
+        List<SyncRawDataEntity> entities = builder.build().list();
+        if (entities == null || entities.size() <= 0) {
+            return null;
+        } else {
+            return entities.get(0);
+        }
+    }
+
+
+    /**
+     * Get the actual sleep end time between low time and high time.
+     *
+     * @param userId UserId
+     * @param low    Low time
+     * @param high   High time
+     * @return Sleep end value
+     */
+    public SyncRawDataEntity getSleepEnd(int userId, int low, int high) {
+        QueryBuilder<SyncRawDataEntity> builder = mDao.queryBuilder();
+        builder.where(
+                SyncRawDataEntityDao.Properties.UserId.eq(userId),
+                SyncRawDataEntityDao.Properties.Type.eq(SyncRawData.TYPE_SLEEP),
+                SyncRawDataEntityDao.Properties.Time.between(low, high),
+                SyncRawDataEntityDao.Properties.Value.notEq(SyncRawData.SLEEP_STATUS_SOBER)
+        ).orderDesc(SyncRawDataEntityDao.Properties.Time).limit(1);
+        List<SyncRawDataEntity> entities = builder.build().list();
+        if (entities == null || entities.size() <= 0) {
+            return null;
+        } else {
+            return entities.get(0);
+        }
+    }
+
+    /**
+     * Get the all sleep datas between low time and high time.
+     *
+     * @param userId UserId
+     * @param low    Low time
+     * @param high   High time
+     * @return Sleep datas
+     */
+    public List<SyncRawDataEntity> getSleepDataBetween(int userId, int low, int high) {
+        return getDataBetween(SyncRawData.TYPE_SLEEP, userId, low, high);
+    }
+
+    public List<SyncRawDataEntity> getDataBetween(int dataType, int userId, int low, int high) {
+        QueryBuilder<SyncRawDataEntity> builder = mDao.queryBuilder();
+        builder.where(
+                SyncRawDataEntityDao.Properties.UserId.eq(userId),
+                SyncRawDataEntityDao.Properties.Type.eq(dataType),
+                SyncRawDataEntityDao.Properties.Time.between(low, high)
+        ).orderAsc(SyncRawDataEntityDao.Properties.Time);
+        return builder.build().list();
     }
 
 }

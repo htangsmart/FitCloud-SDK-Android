@@ -41,6 +41,7 @@
         <activity android:name=".config.ConfigActivity"/>
         <activity android:name=".dfu.DfuActivity"/>
         <activity android:name=".realtimedata.EcgActivity"/>
+        <activity android:name=".syncdata.SleepDataActivity"/>
 
         <activity android:name=".rxjava.RxConnectActivity"/>
 

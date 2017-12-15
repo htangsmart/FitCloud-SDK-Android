@@ -115,22 +115,22 @@ public class RealTimeDataActivity extends AppCompatActivity {
         @Override
         public void onResponseWristbandConfig(WristbandConfig config) {
             WristbandVersion version = config.getWristbandVersion();
-            if (version.isHeartRateEnable()) {
+            if (version.isHeartRateEnabled()) {
                 findViewById(R.id.heart_rate_layout).setVisibility(View.VISIBLE);
                 mHeartRateTv.setText(getString(R.string.heart_rate_value, 0));
             }
 
-            if (version.isOxygenEnable()) {
+            if (version.isOxygenEnabled()) {
                 findViewById(R.id.oxygen_layout).setVisibility(View.VISIBLE);
                 mOxygenTv.setText(getString(R.string.oxygen_value, 0));
             }
 
-            if (version.isBloodPressureEnable()) {
+            if (version.isBloodPressureEnabled()) {
                 findViewById(R.id.blood_pressure_layout).setVisibility(View.VISIBLE);
                 mBloodPressureTv.setText(getString(R.string.blood_pressure_value, 0, 0));
             }
 
-            if (version.isRespiratoryRateEnable()) {
+            if (version.isRespiratoryRateEnabled()) {
                 findViewById(R.id.respiratory_rate_layout).setVisibility(View.VISIBLE);
                 mRespiratoryRateTv.setText(getString(R.string.respiratory_rate_value, 0));
             }

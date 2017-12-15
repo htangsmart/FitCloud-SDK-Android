@@ -114,12 +114,13 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     private ConnectorListener mConnectorListener = new ConnectorListener() {
+
         @Override
-        public void onConnect(WristbandConfig config) {
+        public void onConnect(WristbandConfig config, boolean isLogin) {
             mStateTv.setText(R.string.connect);
             updateConnectBtn(false, true);
             mWristbandConfig = config;
-            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()));
+            Log.e(TAG, "WristbandConfig:" + Arrays.toString(config.getBytes()) + "    \nisLogin:" + isLogin);
             MyApplication.getInstance().setNotificationConfig(config.getNotificationConfig());
             setUserBound(true);
         }
@@ -161,6 +162,10 @@ public class ConnectActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        public void onRestartWristband(boolean success) {
+            Log.e(TAG, "onRestartWristband  success:" + success);
+        }
     };
 
     private void updateConnectBtn(boolean connect, boolean enable) {
@@ -224,7 +229,7 @@ public class ConnectActivity extends AppCompatActivity {
      * 7 Set Weather
      */
     public void set_weather(View view) {
-        if (mWristbandConfig != null && mWristbandConfig.getWristbandVersion().isWeatherEnable()) {
+        if (mWristbandConfig != null && mWristbandConfig.getWristbandVersion().isWeatherEnabled()) {
             mDevicePerformer.cmd_setWeather(30, 10, "深圳");
         }
     }
@@ -270,6 +275,13 @@ public class ConnectActivity extends AppCompatActivity {
      */
     public void dfu(View view) {
         startActivity(new Intent(this, DfuActivity.class));
+    }
+
+    /**
+     * 14 Restart Wristband
+     */
+    public void restartWristband(View view) {
+        mDevicePerformer.restartWristband();
     }
 
     @Override

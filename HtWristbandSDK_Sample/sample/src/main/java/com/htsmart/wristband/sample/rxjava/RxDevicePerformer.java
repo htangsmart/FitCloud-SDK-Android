@@ -470,6 +470,20 @@ class RxDevicePerformer implements Action, Consumer<Throwable> {
         });
     }
 
+    /**
+     * 重启手环
+     */
+    @SuppressWarnings("unchecked")
+    public Observable<Boolean> restartWristband() {
+        return (Observable<Boolean>) performerCmdAction(new CmdAction() {
+            @Override
+            public boolean run() {
+                return mDevicePerformer.restartWristband();
+            }
+        });
+    }
+
+
 //    boolean openHealthyRealTimeData(int var1);
 //
 //    boolean closeHealthyRealTimeData(int var1);
@@ -548,6 +562,11 @@ class RxDevicePerformer implements Action, Consumer<Throwable> {
         @Override
         public void onFindPhone() {
             //查找手机的主动回调
+        }
+
+        @Override
+        public void onRestartWristband(boolean success) {
+            operationPost(success, true);
         }
 
         @Override

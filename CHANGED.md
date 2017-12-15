@@ -1,3 +1,15 @@
+# V1.0.6(2017-12-15)
+## SDK:
+1. 语言设置添加日语
+2. FunctionConfig添加温度单位的设置
+3. 添加重启手环功能
+4. SleepTotalData和TodayTotalData中lightSleep字段重命名为shallowSleep，其代表的功能不变。
+5. WristbandVersion中部分方法名称优化，功能不变。
+
+## Sample:
+1. 添加重启手环的例子
+2. 添加对睡眠数据的解析
+
 # V1.0.5(2017-09-26)
 ## SDK:
 1. 发送通知配置的方法由`sendWristbandNotification`改为`cmd_sendWristbandNotification`，并且在`PerformerListener#onCommandSend()`里有发送结果的回调。

@@ -76,6 +76,7 @@
     <string name="op11">11.Unbind user</string>
     <string name="op12">12.Wristband config</string>
     <string name="op13">13.DFU</string>
+    <string name="op14">14.Restart Wristband</string>
 
 
     <!--Real Time Data-->
@@ -115,6 +116,14 @@
     <string name="sync_data_success">Sync Data Success</string>
     <string name="sync_data_failed">Sync Data Failed</string>
     <string name="sync_data_count">Sync Data Count:<xliff:g id="params">%1$d</xliff:g></string>
+
+    <string name="sync_sleep_data">Sleep Data</string>
+    <string name="select_date">Select Date</string>
+    <string name="last_night_sleep">Last Night Sleep</string>
+    <string name="last_night_total_sleep">Last Night Total Sleep Time:<xliff:g id="params1">%1$d</xliff:g>Hr <xliff:g id="params2">%2$d</xliff:g>Min</string>
+    <string name="last_night_deep_sleep">Last Night Deep Sleep Time:<xliff:g id="params1">%1$d</xliff:g>Hr <xliff:g id="params2">%2$d</xliff:g>Min</string>
+    <string name="last_night_shallow_sleep">Last Night Light Sleep Time:<xliff:g id="params1">%1$d</xliff:g>Hr <xliff:g id="params2">%2$d</xliff:g>Min</string>
+    <string name="no_sleep_detail_data">No Sleep Detail Data</string>
 
     <!--ECG-->
     <string name="open_ecg">Open Ecg</string>

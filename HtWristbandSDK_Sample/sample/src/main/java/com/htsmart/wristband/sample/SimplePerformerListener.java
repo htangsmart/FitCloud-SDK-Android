@@ -57,6 +57,11 @@ public class SimplePerformerListener implements PerformerListener {
     }
 
     @Override
+    public void onRestartWristband(boolean success) {
+
+    }
+
+    @Override
     public void onUserUnBind(boolean success) {
 
     }

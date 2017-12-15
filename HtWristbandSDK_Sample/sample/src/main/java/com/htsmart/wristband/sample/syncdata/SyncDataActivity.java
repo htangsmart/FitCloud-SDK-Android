@@ -1,6 +1,7 @@
 package com.htsmart.wristband.sample.syncdata;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.htsmart.wristband.WristbandApplication;
+import com.htsmart.wristband.bean.SleepTotalData;
 import com.htsmart.wristband.bean.SyncRawData;
 import com.htsmart.wristband.bean.TodayTotalData;
 import com.htsmart.wristband.performer.IDevicePerformer;
@@ -57,6 +60,13 @@ public class SyncDataActivity extends AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.sleep_data_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SyncDataActivity.this, SleepDataActivity.class));
+            }
+        });
     }
 
     private int mSyncCount = 0;
@@ -64,7 +74,7 @@ public class SyncDataActivity extends AppCompatActivity {
     private SimplePerformerListener mPerformerListener = new SimplePerformerListener() {
         @Override
         public void onSyncDataStart(@SyncResult int result) {
-            if (result==PerformerListener.SYNC_STARTED) {
+            if (result == PerformerListener.SYNC_STARTED) {
                 showProgressMessage(R.string.sync_data_started);
             } else {
                 dismissProgressMessage(R.string.prepare_sync_failed);
@@ -100,6 +110,14 @@ public class SyncDataActivity extends AppCompatActivity {
         @Override
         public void onSyncDataTodayTotalData(TodayTotalData data) {
             Log.d("SyncDataActivity", "TodayTotalData:" + data.toString());
+        }
+
+        @Override
+        public void onSyncDataSleepTotalData(List<SleepTotalData> datas) {
+            if (datas != null && datas.size() > 0) {
+                Log.e("SyncDataActivity", "SleepTotalData:" + JSON.toJSONString(datas));
+                SleepDataHelper.setSleepTotalData(SyncDataActivity.this, datas);
+            }
         }
     };
 

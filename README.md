@@ -36,6 +36,8 @@ Android版本要求：4.4以上
 11. 解绑用户
 12. 手环配置
 13. DFU
+14. 设置语言
+15. 重启手环
 
 这两部分都是介绍使用SDK的方法和需要注意的事项，具体详细的API，请参考JavaDoc文档。
 
@@ -469,6 +471,7 @@ private int pageShow;
 2. 加强测量(FLAG_STRENGTHEN_TEST)，true为开启，false为关闭
 3. 十二小时制(FLAG_HOUR_STYLE_12)，true为十二小时制，false为二十四小时制
 4. 英制单位(FLAG_IMPERIAL_UNITS)，true为英制单位，false为公制单位
+5. 温度单位(FLAG_TEMPERATURE_UNITS)，true为华氏摄氏度，false为摄氏度
 
 #### 12.6 HealthyConfig
 用于配置是否开启健康数据的实时检测，并设置开始和结束的时间。
@@ -495,4 +498,20 @@ V1.0.4新增。可以根据`WristbandVersion#isNewTurnWristLightingEnabled()`判
 
 具体细节，请参考javaDoc文档和示例。
 
+### 14.设置语言
+调用`IDevicePerformer#cmd_setLanguage(byte languageType)`来设置语言。该功能并不是设置手环基本界面的的语言，而是针对通知提醒可显示的语言。
+在使用设置语言之前，需要保证`WristbandVersion#isLanguageSettingEnabled()`为true，即手环支持设置语言功能。
+0x01 简体中文
+0x02 繁体中文
+0x03 英语
+0x04 德语
+0x05 俄语
+0x06 西班牙语
+0x07 葡萄牙语
+0x08 法语
+0x09 日语（需要保证`WristbandVersion#isLanguageJaEnabled()`为true，即手环支持日语设置）
+0xff 如果不是上面9种语言，设置为0xff
 
+### 15.重启手环
+调用`IDevicePerformer#restartWristband()`来重启手环。
+重启手环的结果在`PerformerListener#onRestartWristband(boolean)`中返回，返回true代表重启成功。false为重启失败，失败原因一般是手环不支持该功能。

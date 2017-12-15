@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
 
     defaultConfig {
         applicationId "com.htsmart.wristband.sample"
@@ -39,7 +39,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:27.0.2'
     compile(name: 'Lib_WheelView-release', ext: 'aar')
     //    compile(name: 'wristband-release', ext: 'aar')
     //    compile(name: 'Lib_BluetoothLe-release', ext: 'aar')
@@ -53,7 +53,9 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    compile(name: 'wristband-release_v1.0.5', ext: 'aar')
-    compile(name: 'Lib_BluetoothLe-release_v1.0.5', ext: 'aar')
-    compile(name: 'Lib_DFU-release_v1.0.5', ext: 'aar')
+    compile 'com.alibaba:fastjson:1.1.64.android'
+
+    compile(name: 'wristband-release_v1.0.6', ext: 'aar')
+    compile(name: 'Lib_BluetoothLe-release_v1.0.6', ext: 'aar')
+    compile(name: 'Lib_DFU-release_v1.0.6', ext: 'aar')
 }

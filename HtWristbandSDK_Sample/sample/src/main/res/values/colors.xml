@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="light_divider">#FFDBDBDB</color>
+
+    <color name="sleep_level_1_color">#4D65BD</color>
+    <color name="sleep_level_2_color">#8AA6E7</color>
+    <color name="sleep_level_3_color">#A7D6E0</color>
 </resources>

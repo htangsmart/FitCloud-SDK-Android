@@ -11,4 +11,10 @@
         android:layout_height="wrap_content"
         android:text="@string/sync_data"/>
 
+    <Button
+        android:id="@+id/sleep_data_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sync_sleep_data"/>
+
 </LinearLayout>
