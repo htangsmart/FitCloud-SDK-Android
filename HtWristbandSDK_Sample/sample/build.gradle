@@ -55,7 +55,7 @@ dependencies {
 
     compile 'com.alibaba:fastjson:1.1.64.android'
 
-    compile(name: 'wristband-release_v1.0.6', ext: 'aar')
-    compile(name: 'Lib_BluetoothLe-release_v1.0.6', ext: 'aar')
-    compile(name: 'Lib_DFU-release_v1.0.6', ext: 'aar')
+    compile(name: 'wristband-release_v1.0.8', ext: 'aar')
+    compile(name: 'Lib_BluetoothLe-release_v1.0.8', ext: 'aar')
+    compile(name: 'Lib_DFU-release_v1.0.8', ext: 'aar')
 }
