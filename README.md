@@ -367,6 +367,7 @@ SDK支持4种实时数据的测试，但是能不能使用，还要取决于手�
 
 ADD:新增ECG(心电)实时数据，使用类似于其他四种实时数据，但是数据的返回在一个单独的方法`PerformerListener#onResultEcgRealTimeData(byte[])`中。返回的数据为原始数据，每包数据为20个字节。2个字节代表心电，2个字节代表心率，一直交替直到20字节。
 
+ADD:`IDevicePerformer#openHealthyRealTimeData(@HealthyType int healthyType,int minute)`可以自定义时间，时间参数对HEALTHY_TYPE_ECG类型无效。
 ### 9.拍照控制
 
 手环实现的拍照功能并不能控制Android系统的相机，你必须自己实现相机拍照功能。
